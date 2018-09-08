@@ -20,6 +20,12 @@ class Main extends PluginBase{
         }
         $config = new Config($this->getDataFolder() . "Athletics.yml", Config::YAML);
         AthleticManager::init($config);
-        PlayerModule::init();
+        AthleticManager::register();
+
+        PlayerModule::init($this);
+    }
+
+    protected function onDisable(): void{
+        AthleticManager::unregister();
     }
 }

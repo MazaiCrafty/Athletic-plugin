@@ -3,6 +3,7 @@
 namespace athletic\game;
 
 use pocketmine\utils\Config;
+use pocketmine\math\Vector3;
 
 class AthleticManager{
 
@@ -26,6 +27,11 @@ class AthleticManager{
         unset(self::$config);
     }
 
+    public static function setData(string $name, array $data): void{
+        self::$config->set($name, $data);
+        self::$config->save();
+    }
+
     public static function getData(string $name): ?array{
         $athletic = self::$athletics[$name] ?? null;
         if ($athletic === null){
@@ -34,7 +40,7 @@ class AthleticManager{
         return self::$athletics[$name];
     }
 
-    public static function existsAthletic(Vecotr3 $vector): string{
+    public static function existsAthletic(Vecotr3 $vector): ?string{
         $athletics = self::$config->getAll(true);
         foreach ($athletics as $name => $data){
             if ($data["Start"]["X"] === $vector->getX()
